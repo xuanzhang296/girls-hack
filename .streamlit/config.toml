@@ -1,0 +1,6 @@
+[theme]
+primaryColor = "#1C83E1" # 例如，将主颜色设置为蓝色
+backgroundColor = "#F5F5F5" # 例如，将背景颜色设置为白色
+secondaryBackgroundColor = "#C5DAB5" # 例如，将二级背景颜色设置为浅灰色
+textColor = "#31333F" # 例如，将文本颜色设置为深灰色
+font = "sans serif"

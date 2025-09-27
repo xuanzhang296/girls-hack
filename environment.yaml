@@ -1,0 +1,14 @@
+name: girls-hackathon
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+    - llm
+    - langchain
+    - streamlit
+    - openai
+    - python-dotenv
+    - google-generativeai
