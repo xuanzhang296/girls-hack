@@ -1,5 +1,4 @@
 import json
-from openai import OpenAI
 import streamlit as st
 import os
 import base64
