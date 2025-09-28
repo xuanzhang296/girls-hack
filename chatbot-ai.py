@@ -155,6 +155,17 @@ st.markdown("""
         min-height: 20px !important;
         padding-left: 5px !important;
     }
+    
+    /* Custom color for Get Started button */
+    button[kind="primary"] {
+        background-color: #E28312 !important;
+        border-color: #E28312 !important;
+    }
+    
+    button[kind="primary"]:hover {
+        background-color: #C6730F !important;
+        border-color: #C6730F !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 # 使用容器和列来创建更紧凑的布局
@@ -356,6 +367,21 @@ if older_histories:
             st.session_state['messages'] = history['messages']
             st.session_state['chat_name'] = history['name']
             st.rerun()
+
+# Add Get Started button in the center when no messages
+if not st.session_state.get('messages', []):
+    # Add spacing to push button down
+    st.markdown("<br><br><br><br>", unsafe_allow_html=True)
+    st.markdown("<br><br><br><br>", unsafe_allow_html=True)
+    st.markdown("<br><br><br><br>", unsafe_allow_html=True)
+    st.markdown("<br><br><br><br>", unsafe_allow_html=True)
+    st.markdown("<br><br><br><br>", unsafe_allow_html=True)
+    
+    # Create centered layout for the button
+    col1, col2, col3, col4 , col5 , col6 = st.columns([1, 1,1,1,1,1])
+    with col2:
+        if st.button("🚀 Start Journey", type="primary"):
+            st.switch_page("pages/1_Signal_Insights.py")
 
 # update the interface with the previous messages
 for message in st.session_state['messages']:

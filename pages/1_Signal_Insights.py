@@ -170,13 +170,15 @@ def main() -> None:
     # section 2: textual explanation
     with col_text:
         st.markdown("**Textual Explanation**")
-        st.markdown("你现在心跳加速， 呼吸急促，脂肪燃烧")
+        ai_explanation = "你现在心跳加速， 呼吸急促，脂肪燃烧"
+        st.markdown(ai_explanation)
 
 
     # section 3: model recommendation
     with col_ai:
         st.markdown("**AI Suggestions**")
-        st.markdown("建议你减少运动 多吃好吃的， 这样你能长命百岁！！！！")
+        ai_suggestions = "建议你减少运动 多吃好吃的， 这样你能长命百岁！！！！"
+        st.markdown(ai_suggestions)
         prompt_default = (
             "Based on the following signal metrics, provide concise, actionable suggestions. "
             "Cover likely signal sources, whether filtering is needed, threshold ideas, and next steps."
@@ -185,18 +187,24 @@ def main() -> None:
         if st.button("Generate Suggestions", type="primary", use_container_width=True):
             ai_handler = get_ai_handler()
             system = (
-                "You are a senior signal processing engineer. Turn statistics into engineering advice. "
-                "Be structured. Provide up to 6 bullet points, each under 30 words."
+                "You are a health and fitness AI assistant. Based on the current health status and suggestions provided, "
+                "answer the user's question with personalized advice. Be helpful, encouraging, and health-focused. "
+                "Provide practical recommendations in a friendly tone."
             )
+            
+            # Use the predefined explanation and suggestions as context
+            context_info = (
+                f"Current Health Status: {ai_explanation}\n"
+                f"Current Recommendations: {ai_suggestions}\n"
+                f"Signal Data: {format_metrics_text(metrics) if values else 'No signal data available'}\n"
+                f"User Question: {user_prompt.strip() if user_prompt else 'General health advice request'}"
+            )
+            
             messages = [
                 {"role": "system", "content": system},
                 {
-                    "role": "user",
-                    "content": (
-                        f"Metrics: {format_metrics_text(metrics)}\n"
-                        f"Sample Rate: {sample_rate} Hz, Duration: {duration} s, Base Freq: {base_freq} Hz, Noise σ: {noise_std}\n"
-                        f"Context: {user_prompt.strip() if user_prompt else 'None'}"
-                    ),
+                    "role": "user", 
+                    "content": context_info
                 },
             ]
             # stream response via handler
