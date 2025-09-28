@@ -12,6 +12,7 @@ import altair as alt
 
 st.set_page_config(page_title="Signal Insights", page_icon="📈", layout="wide")
 
+DATA_JSON_PATH = "Trible_EXG_Signal1.json"
 
 def generate_signal(sample_rate_hz: int, duration_s: float, freq_hz: float, noise_std: float) -> tuple[np.ndarray, np.ndarray]:
     num_samples = int(sample_rate_hz * duration_s)
@@ -261,7 +262,7 @@ def main() -> None:
     # section 1: line chart
     with col_chart:
         st.markdown("**Signal Plot**")
-        exg_time1, exg_values1 = load_signal1_from_json("Trible_EXG_Signal1.json")
+        exg_time1, exg_values1 = load_signal1_from_json(DATA_JSON_PATH)
         if exg_values1:
             # Use provided Time if valid; otherwise fallback to index
             x_vals = exg_time1 if exg_time1 else list(range(len(exg_values1)))
@@ -277,7 +278,7 @@ def main() -> None:
             )
             st.altair_chart(chart, use_container_width=True)
         else:
-            st.info("No data found in Trible_EXG_Signal1.json or 'Signal1' missing.")
+            st.info(f"No data found in {DATA_JSON_PATH} or 'Signal1' missing.")
             
         # Add Signal2 chart under Signal1
         # exg_time2, exg_values2 = load_signal2_from_json("Trible_EXG_Signal1.json")
@@ -298,7 +299,7 @@ def main() -> None:
         #     st.info("No data found in Trible_EXG_Signal1.json or 'Signal2' missing.")
 
         # Add Signal2 chart under Signal1
-        exg_time2, exg_values2 = load_signal2_from_json("Trible_EXG_Signal1.json")
+        exg_time2, exg_values2 = load_signal2_from_json(DATA_JSON_PATH)
         if exg_values2:
             x2 = exg_time2 if exg_time2 else list(range(len(exg_values2)))
             df2 = pd.DataFrame({"x": x2, "y": exg_values2})
@@ -313,10 +314,10 @@ def main() -> None:
             )
             st.altair_chart(chart2, use_container_width=True)
         else:
-            st.info("No data found in Trible_EXG_Signal1.json or 'Signal2' missing.")
+            st.info(f"No data found in {DATA_JSON_PATH} or 'Signal2' missing.")
 
         # Add Signal3 chart under Signal2
-        exg_time3, exg_values3 = load_signal3_from_json("Trible_EXG_Signal1.json")
+        exg_time3, exg_values3 = load_signal3_from_json(DATA_JSON_PATH)
         if exg_values3:
             x3 = exg_time3 if exg_time3 else list(range(len(exg_values3)))
             df3 = pd.DataFrame({"x": x3, "y": exg_values3})
@@ -331,7 +332,7 @@ def main() -> None:
             )
             st.altair_chart(chart3, use_container_width=True)
         else:
-            st.info("No data found in Trible_EXG_Signal1.json or 'Signal3' missing.")
+            st.info(f"No data found in {DATA_JSON_PATH} or 'Signal3' missing.")
         
         
 
@@ -373,8 +374,8 @@ def main() -> None:
     # section 2: textual explanation
     with col_text:
         st.markdown("**Textual Explanation**")
-        msg = load_message_from_json("Trible_EXG_Signal1.json")
-        ai_explanation = msg if msg else "No message found in Trible_EXG_Signal1.json"
+        msg = load_message_from_json(DATA_JSON_PATH)
+        ai_explanation = msg if msg else f"No message found in {DATA_JSON_PATH}"
         st.markdown(ai_explanation)
 
 
